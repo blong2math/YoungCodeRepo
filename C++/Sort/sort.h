@@ -1,7 +1,7 @@
 #ifndef SORT
 #define SORT
 
-#include "MinHeap.h"
+#include "min_heap.h"
 
 // Bubble Sort Algorithm
 template<typename E>
