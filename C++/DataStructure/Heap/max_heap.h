@@ -125,7 +125,7 @@ public:
 	E removefirst(){
 		Swap(0, n);
 		n--;
-		BuildHeap();
+		siftdown(0);
 		return heap[n];
 	}
 

@@ -13,10 +13,10 @@ template<typename E>
 class Link{
 public:
 	Link<E>* next;
-	E value;
+	E element;
 
 	Link(E value, Link<E>* next = NULL){
-		this->value = value;
+		this->element = value;
 		this->next = next;
 	}
 
@@ -30,12 +30,12 @@ public:
 template <typename E>
 class DLink {
 public:
-	E value;      // Value for this node
+	E element;      // Value for this node
 	DLink *next;        // Pointer to next node in list
 	DLink *prev;
 	DLink(const E& elemval, DLink* nextval = NULL, DLink* prevval = NULL)
 	{
-		value = elemval;
+		element = elemval;
 		next = nextval;
 		prev = prevval;
 	}
@@ -283,7 +283,6 @@ public:
 	void prev(){
 		if (curr != head){
 			int pos = this->currPos();
-			this->moveToStart();
 			for (int i = 0; i < pos - 1; i++){
 				next();
 			}
@@ -313,120 +312,6 @@ public:
 
 	int getLength() const{
 		return length;
-	}
-
-	const E& getValue() const{
-		if (curr->next != NULL){
-			return curr->next->value;
-		}
-	}
-};
-
-// Double side Linked list
-template<typename E>
-class DLList : public List<E>{
-private:
-	int length;
-	DLink<E>* curr;
-	DLink<E>* tail;
-	DLink<E>* head;
-
-public:
-	DLList() {
-		head = curr = new DLink<E>();
-		tail = new DLink<E>();
-		tail->prev = head;
-		head->next = tail;
-		length = 0;
-	}
-
-	~DLList() {
-		clear();
-		delete tail;
-		delete head;
-	}
-
-	void clear(){
-		while (head->next != tail){
-			curr = head->next;
-			head->next = curr->next;
-			delete curr;
-		}
-		curr = head;
-		length = 0;
-	}
-
-	void insert(const E& item){
-		curr->next = curr->next->prev = new DLink<E>(item, curr->next, curr);
-		length++;
-	}
-
-	void append(const E& item){
-		tail->prev = tail->prev->next = new DLink<E>(item, tail, tail->prev);
-		length++;
-	}
-
-	E remove(){
-		if (curr->next == tail){
-			return NULL;
-		}
-		E it = curr->next->value;
-		DLink<E>* temp = curr->next;
-		temp->next->prev = curr;
-		curr->next = temp->next;
-		delete temp;
-		length--;
-		return it;
-	}
-
-	void print(){
-		DLink<E>* temp = head;
-		while (temp->next != tail){
-			cout << temp->next->value << " ";
-			temp = temp->next;
-		}
-		cout << endl;
-	}
-
-	void moveToStart(){
-		curr = head;
-	}
-
-	void moveToEnd(){
-		curr = tail;
-	}
-
-	void prev(){
-		if (curr != head){
-			curr = curr->prev;
-		}
-	}
-
-	void next(){
-		if (curr != tail){
-			curr = curr->next;
-		}
-	}
-
-	int getLength() const{
-		return length;
-	}
-
-	int currPos() const{
-		int i = 0;
-		DLink<E>* temp = head;
-		while (temp != curr){
-			temp = temp->next;
-			i++;
-		}
-		return i;
-	}
-
-	void moveToPos(int pos){
-		moveToStart();
-		for (int i = 0; i < pos; i++){
-			next();
-		}
 	}
 
 	const E& getValue() const{
@@ -557,7 +442,7 @@ public:
 			return curr->element;
 		}
 		else{
-			return NULL;
+			// Assert
 		}
 	}
 };
