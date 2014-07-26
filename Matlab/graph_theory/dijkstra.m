@@ -19,7 +19,7 @@ graph(5,6)=55;
 % Pre-process of this graph
 graph = graph + graph';
 graph(graph == 0) = inf;
-%% Calculations
+%% Calculations:
 % Initialization path, distance and isvisit
 isvisit = zeros(1, num_points); isvisit(1) = 1;
 distance(1:length(graph)) = inf; distance(1) = 0;
