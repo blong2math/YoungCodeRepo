@@ -6,14 +6,17 @@
 %% Parameters(Sample):
 % 输入样本原始数据，n×l的矩阵，n为变量个数，l为样本个数
 X = load('sampleFeatures.txt');
+
 % 输出样本原始数据，1×l的矩阵，l为样本个数
 y = load('sampleLabels.txt');
 
+% neural net
+net = feedforwardnet([4, 4]);
+net.trainParam.max_fail = 100;
+
 %% Calculations:
 % train the neural net
-net = feedforwardnet([4, 4]);
 net.trainParam.showWindow = 0;
-net.trainParam.max_fail = 100;
 net = train(net, X', y');
 % Plot the boundary of neural net
 label = find(y == 1);
